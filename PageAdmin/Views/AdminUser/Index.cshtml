@@ -1,0 +1,63 @@
+﻿@model PageAdmin.Models.UserViewModel
+@{
+    
+    ViewBag.Title = "Admins";
+}
+
+<h2>Admins</h2>
+
+<div class="container">
+    <div class="row">
+
+        <div class="users col-md-11">
+            <table>
+                <thead>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.UserName)</td>
+                        <td>@Html.LabelFor(m => m.Role)</td>
+                        <td>@Html.LabelFor(m => m.LastLogin)</td>
+                        <td>@Html.LabelFor(m => m.CreateDate)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Role</td>
+                            <td>@user.LastLogin</td>
+                            <td>@user.CreateDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Open" class="user col-md-1" style="border: 1px solid black; padding:10px; ">
+            <i class="glyphicon-plus"></i>
+            <div id="CreateUser" class="hidden">
+                @Html.BeginForm("CreateUser", "AdminUser"){ 
+                @Html.AntiForgeryToken()
+
+                @Html.Partial("_UserForm")
+                <input type="submit" value="Skapa" />
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section Script{
+<script type="text/javascript">
+    $("#Open").click(function () {
+        var bigDiv = $(".users.col-md-11").removeClass("col-md-11").addClass("col-md-8");
+        var smallDiv = $(".user.col-md-1").removeClass("col-md-1").addClass("col-md-4");
+        console.log(bigDiv.length === 0)
+        if (bigDiv.length === 0) {
+            var bigDiv = $(".users.col-md-8").removeClass("col-md-8").addClass("col-md-11");
+            var smallDiv = $(".user.col-md-4").removeClass("col-md-4").addClass("col-md-1");
+        }
+    })
+</script>
+    }

@@ -1,0 +1,33 @@
+﻿@model PageAdmin.Models.ViewModel.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<article>
+    @using (Html.BeginForm("LoginValidate", "Start"))
+    {
+        @Html.AntiForgeryToken();
+    <table>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.Username)</td>
+                <td>@Html.TextBoxFor(m => m.Username)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Password)</td>
+                <td>@Html.TextBoxFor(m => m.Password)</td>
+            </tr>
+            <tr>
+                <td class="alert">
+                    @Html.ValidationSummary()
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Skicka" /></td>
+            </tr>
+        </tbody>
+    </table>
+    }
+</article>
