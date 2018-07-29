@@ -16,3 +16,18 @@ textarea {
     max-width: 280px;
 }
 
+#Open.user{
+    position: absolute;
+    right: 0px;
+    top: 50px;
+}
+
+#CreateUser.user-form{
+    width: 300px;
+    position:absolute;
+    right: 30px;
+    top: 100px;
+    background: #efeded;
+    border: 1px dotted #ffffff;
+    padding: 5px;
+}

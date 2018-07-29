@@ -13,4 +13,11 @@ namespace PageAdmin.Models.Enum
         SuperAdmin,
         Owner
     }
+
+    public enum EditType
+    {
+        Create,
+        Edit,
+        Delete
+    }
 }

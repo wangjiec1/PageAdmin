@@ -1,0 +1,30 @@
+﻿@model PageAdmin.Models.UserViewModel
+<table>
+    <thead>
+        <tr>
+            <td>@Html.LabelFor(m => m.UserName)</td>
+            <td>@Html.LabelFor(m => m.Name)</td>
+            <td>@Html.LabelFor(m => m.Email)</td>
+            <td>@Html.LabelFor(m => m.Role)</td>
+            <td>@Html.LabelFor(m => m.LastLogin)</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            @Html.HiddenFor(m => m.Id)
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>@user.LastLogin</td>
+                <td>
+                    <input type="button" value="Edit" onclick="EditUser('@user.Id')" />
+                    <input type="button" value="Ta bort" onclick="DeleteUser('@user.Id')" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

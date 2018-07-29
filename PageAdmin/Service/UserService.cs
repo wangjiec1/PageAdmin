@@ -50,7 +50,7 @@ namespace PageAdmin.Service
                 DateTime.Now,
                 DateTime.Now.AddDays(7),
                 true,
-                user.Role + "|" + user.ID,
+                user.Role + "|" + user.ID + "|" + user.Site.ID,
                 _cookieName
                 );
             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
@@ -80,7 +80,7 @@ namespace PageAdmin.Service
                     case "role":
                         return userData[0];
 
-                    case "sites":
+                    case "siteid":
                         return userData[2];
 
                     default:
@@ -92,25 +92,15 @@ namespace PageAdmin.Service
 
         public static HttpCookie SiteCookie(AdminUser user)
         {
-            string siteIDs = string.Empty;
-            foreach(var site in user.Sites)
-            {
-                if(siteIDs == string.Empty)
-                {
-                    siteIDs = site.ID.ToString();
-                }
-                else
-                {
-                    siteIDs = siteIDs + "|" + site.ID.ToString();
-                }
-            }
+            string siteID = user.Site.ID.ToString();
+
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                 1,
                 user.UserName,
                 DateTime.Now,
                 DateTime.Now.AddDays(7),
                 true,
-                siteIDs,
+                siteID,
                 _siteCookieID
                 );
             string encryptedTicket = FormsAuthentication.Encrypt(ticket);

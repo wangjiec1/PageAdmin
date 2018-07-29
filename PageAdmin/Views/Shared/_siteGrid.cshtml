@@ -1,0 +1,26 @@
+﻿@model PageAdmin.Models.ViewModel.SiteGridViewModel
+
+<table>
+    <tr>
+        <td>@Html.LabelFor(m => m.Name)</td>
+        <td>@Html.LabelFor(m => m.Url)</td>
+    </tr>
+    
+    @foreach(var site in Model.Sites)
+    {
+        var activateButton = site.Active ? "AvAktivera" : "Aktivera";
+        <tr>
+            <td>
+                @site.Name
+            </td>
+            <td>
+                @site.Url
+            </td>
+            <td>
+                <button onclick="EditSite('@site.ID')">Edit</button>
+                <button onclick="Activatesite('@site.ID')"> @activateButton </button>
+            </td>
+        </tr>
+    }
+
+</table>

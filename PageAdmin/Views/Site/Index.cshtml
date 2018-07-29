@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Sites";
+}
+
+<div class="container">
+    <div class="row">
+        <div id="SiteGrid"></div>
+    </div>
+    <div class="row">
+        <div class="hidden siteForm">
+            @using (Html.BeginForm("EditSite", "Site"))
+            {
+                <div id="SiteForm"></div>
+                <input type="submit" value="Ändra" />
+            }
+        </div>
+    </div>
+</div>
+
+@section Script{
+    <script>
+        $(function () {
+            $.post({
+                url: '@Url.Action("SiteGrid", "Site")',
+                success: function (data) {
+                    $('#SiteGrid').html(data);
+                }
+
+            })
+        })
+
+        function EditSite(id) {
+            $.post({
+                url: '@Url.Action("SiteForm", "Site")',
+                data: { id: id },
+                success: function (data) {
+                    $("#SiteForm").html("").html(data);
+                    $(".siteForm").toggleClass("hidden");
+                }
+            })
+        }
+    </script>
+    }

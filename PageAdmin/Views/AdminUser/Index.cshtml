@@ -1,4 +1,4 @@
-﻿@model PageAdmin.Models.UserViewModel
+﻿@model PageAdmin.Models.ViewModel.AdminUserIndexViewModel
 @{
     
     ViewBag.Title = "Admins";
@@ -8,56 +8,87 @@
 
 <div class="container">
     <div class="row">
+        <div class="text-center">
+            @Html.LabelFor(m => m.Name) : @Model.Name || @Model.SiteName
+        </div>
+    </div>
+    <div class="row">
 
-        <div class="users col-md-11">
-            <table>
-                <thead>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.UserName)</td>
-                        <td>@Html.LabelFor(m => m.Role)</td>
-                        <td>@Html.LabelFor(m => m.LastLogin)</td>
-                        <td>@Html.LabelFor(m => m.CreateDate)</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var user in Model.Users)
-                    {
-                        <tr>
-                            <td>@user.UserName</td>
-                            <td>@user.Role</td>
-                            <td>@user.LastLogin</td>
-                            <td>@user.CreateDate</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="users col-md-12">
+            <div id="UserGrid"></div>
         </div>
 
-        <div id="Open" class="user col-md-1" style="border: 1px solid black; padding:10px; ">
-            <i class="glyphicon-plus"></i>
-            <div id="CreateUser" class="hidden">
-                @Html.BeginForm("CreateUser", "AdminUser"){ 
-                @Html.AntiForgeryToken()
-
-                @Html.Partial("_UserForm")
-                <input type="submit" value="Skapa" />
-                }
-            </div>
+        <div id="Open" class="user" style="border: 1px solid black; padding:10px; ">
+            <i class="glyphicon-plus"> Lägg till användare</i>
         </div>
+        <div id="CreateUser" class="hidden user-form">
+            @using (Html.BeginForm("CreateUser", "AdminUser", FormMethod.Post, htmlAttributes: new { id = "CreateUser" })) {
+            <div id="createUserForm"></div>
+            <input type="submit" value="Skapa Användare" id="createUser" />
+            }
+        </div>
+
+        <div id="EditUser" class="hidden user-form">
+            @using (Html.BeginForm("UpdateUser", "AdminUser", FormMethod.Post, htmlAttributes: new { id = "EditUserr" })) {
+            <div id = "editUserForm" ></div >
+
+
+             <input type = "submit" value = "Ändra" id = "editUser" />
+            }
+        </div>
+
 
     </div>
 
 </div>
 @section Script{
-<script type="text/javascript">
+<script>
+    $(function () {
+        $.post({
+            url: '@Url.Action("LoadUserGrid", "AdminUser")',
+            success: function (data) {
+                $("#UserGrid").html(data);
+            },
+            failure: function () {
+                $("#UserGrid").html("Kunde inte ladda användare.")
+            }
+        })
+    })
+
+    function EditUser(id) {
+        $.post({
+            url: '@Url.Action("LoadForm", "AdminUser")',
+            data: {id: id},
+            success: function (data) {
+                $('#editUserForm').html(data)
+                $('#EditUser').toggleClass("hidden");
+            }
+        })
+    }
+
+    function DeleteUser(id) {
+        console.log("hej");
+        $.post({
+            url: '@Url.Action("DeleteUser", "AdminUser")',
+            data: {id: id },
+            success: function (data) {
+                alert("Användare borttagen.");
+                $("#UserGrid").html("").html(data);
+            }
+        })
+    }
+
+
     $("#Open").click(function () {
-        var bigDiv = $(".users.col-md-11").removeClass("col-md-11").addClass("col-md-8");
-        var smallDiv = $(".user.col-md-1").removeClass("col-md-1").addClass("col-md-4");
-        console.log(bigDiv.length === 0)
-        if (bigDiv.length === 0) {
-            var bigDiv = $(".users.col-md-8").removeClass("col-md-8").addClass("col-md-11");
-            var smallDiv = $(".user.col-md-4").removeClass("col-md-4").addClass("col-md-1");
-        }
+        console.log("hej");
+            $.post({
+            url: '@Url.Action("LoadForm", "AdminUser")',
+            //data: {id: id},
+            success: function (data) {
+                $('#createUserForm').html(data)
+                $('#CreateUser').toggleClass("hidden");
+            }
+        })
     })
 </script>
     }

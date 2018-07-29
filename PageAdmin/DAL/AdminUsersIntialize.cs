@@ -15,9 +15,9 @@ namespace PageAdmin.DAL
             var salt = UserService.GetSalt();
             var adminUser = new List<AdminUser>
             {
-                new AdminUser{ID = Guid.NewGuid(), UserName = "Mimer", Password = UserService.PasswordHash(salt, "1234"),PasswordSalt = salt, CreateDate = DateTime.Now, LastLogin = DateTime.Now, Role = Models.Enum.RoleEnum.Owner },
+                new AdminUser{ID = Guid.Parse("b1969de6-9beb-4933-a765-f8234303268c"), UserName = "Mimer", Password = UserService.PasswordHash(salt, "1234"),PasswordSalt = salt, CreateDate = DateTime.Now, LastLogin = DateTime.Now, Role = Models.Enum.RoleEnum.Owner },
 
-                new AdminUser{ID = Guid.NewGuid(), UserName = "Grifling", Password = UserService.PasswordHash(salt, "1234"),PasswordSalt = salt, CreateDate = DateTime.Now, LastLogin = DateTime.Now, Role = Models.Enum.RoleEnum.Admin }
+                new AdminUser{ID = Guid.Parse("939e1a53-0799-4c50-9b1a-28287fae5d2b"), UserName = "Grifling", Password = UserService.PasswordHash(salt, "1234"),PasswordSalt = salt, CreateDate = DateTime.Now, LastLogin = DateTime.Now, Role = Models.Enum.RoleEnum.Admin }
             };
 
             adminUser.ForEach(s => context.AdminUser.Add(s));
@@ -31,10 +31,8 @@ namespace PageAdmin.DAL
             site.ForEach(s => context.Site.Add(s));
             context.SaveChanges();
 
-            List<Site> sites = new List<Site>();
-            sites.Add(site[0]);
-            adminUser[0].Sites = sites;
-            adminUser[1].Sites = sites;
+            adminUser[0].Site = site[0];
+            adminUser[1].Site = site[0];
 
             List<AdminUser> users = new List<AdminUser>();
             users.Add(adminUser[0]);

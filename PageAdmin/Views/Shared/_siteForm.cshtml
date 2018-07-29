@@ -1,0 +1,36 @@
+﻿@model PageAdmin.Models.ViewModel.SiteGridViewModel
+
+<article id="SiteForm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                @Html.LabelFor(m => m.Name)
+            </div>
+            <div class="col-md-8 col-sm-12">
+                @Html.TextBoxFor(m => m.Name)
+            </div>
+            <div class="warning col-md-12 col-sm-12">
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                @Html.LabelFor(m => m.Url)
+            </div>
+            <div class="col-md-8 col-sm-12">
+                @Html.TextBoxFor(m => m.Url)
+            </div>
+            <div class="warning col-md-12 col-sm-12">
+                @Html.ValidationMessageFor(m => m.Url)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                @Html.LabelFor(m => m.Active)
+            </div>
+            <div class="col-md-8 col-sm-12">
+                @Html.CheckBoxFor(m => m.Active)
+            </div>
+        </div>
+    </div>
+</article>

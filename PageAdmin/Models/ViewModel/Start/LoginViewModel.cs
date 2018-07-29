@@ -12,6 +12,7 @@ namespace PageAdmin.Models.ViewModel
         public string Username { get; set; }
 
         [Display(Name = "Lösenord")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }
